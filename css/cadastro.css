@@ -29,6 +29,10 @@ a:hover {
     color: #8e09db;
 }
 
+fieldset {
+    border: none;
+}
+
 h4 {
     margin-bottom: 25px;
     font-size: 24px;    
@@ -44,13 +48,30 @@ form {
     margin-bottom: 40px;    
 }
 
-label, input {
+.form-control label {
+    display: inline-block;
+    margin-bottom: 5px;
+    color: #828CAD;
+}
+
+.form-control input {
+    border: 2px solid #3E445B;
+    border-radius: 15px;
+    outline: 0;
+    display: block;
+    font-size: 14px;
+    width: 100%;
+    padding: 15px;
+}
+
+label {
     display: block;
     width: 100%;
     text-align: left;
 }
 
 input {
+    width: 100%;
     border: none;
     border-radius: 20px;
     padding: 15px;
@@ -109,18 +130,25 @@ h4, p, #cadastro, #inputs {
     color: white;
 }
 
-input:valid {
-    border: 2px solid green
+.form-control.success input {
+    border: 3px solid #4ECA64;
 }
 
-input:invalid {
-    border: 2px solid rgb(170, 4, 4)
+.form-control.error input {
+    border: 3px solid #c41717;
 }
 
-span.error.active {    
-    display: flex;
-    text-align: left;
-    color: red;
+#error-nome {
+    color: #c41717;
     font-size: 14px;
-    margin-left: 8px;
+}
+
+#error-email {
+    font-size: 14px;
+    color: #c41717;
+}
+
+#error-senha {
+    font-size: 14px;
+    color: #c41717;
 }

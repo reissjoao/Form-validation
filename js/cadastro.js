@@ -1,38 +1,90 @@
-/* VALIDAÇÃO FORMULÁRIO */ 
+const fields = document.querySelectorAll("[required]")
 
-const fields = document.querySelectorAll("[required]");
-
-// console.log(fields)
-
-function customValidation(event) {
-    const field = event.target
-
-    // logica para verificar se existem erros 
+function ValidateField(field) {
+    // logica para verificar se existem erros
     function verifyErrors() {
         let foundError = false;
-        
-        for(let error in field.validity){
-            if (error !== "customError" && field.validity[error]){
-                foundError = true
+
+        for(let error in field.validity) {
+            // se não for customError
+            // então verifica se tem erro
+            if (field.validity[error] && !field.validity.valid ) {
+                foundError = error
+            }
+        }
+        return foundError;
+    }
+
+    function customMessage(typeError) {
+        const messages = {
+            text: {
+                valueMissing: "Por favor, preencha este campo"
+            },
+            email: {
+                valueMissing: "Email é obrigatório",
+                typeMismatch: "Por favor, preencha um email válido"
+            },
+            password: {
+                valueMissing: "Por favor, insira uma senha"
             }
         }
 
-        return foundError;
+        return messages[field.type][typeError]
     }
-    
-    const error = verifyErrors()
-    console.log("Error Exists: ", error)
 
-    if (error) {
-        // trocar mensagem de required 
-        field.setCustomValidity("Esse campo é obrigatório")
-    } else {
-        field.setCustomValidity("")
-    } 
+    function setCustomMessage(message) {
+        const spanError = field.parentNode.querySelector("span.error")
+        
+        if (message) {
+            spanError.classList.add("active")
+            spanError.innerHTML = message
+        } else {
+            spanError.classList.remove("active")
+            spanError.innerHTML = ""
+        }
+    }
+
+    return function() {
+
+        const error = verifyErrors()
+
+        if(error) {
+            const message = customMessage(error)
+
+            field.style.borderColor = "red"
+            setCustomMessage(message)
+        } else {
+            field.style.borderColor = "green"
+            setCustomMessage()
+        }
+    }
 }
 
-for (field of fields) {
-    field.addEventListener("invalid", customValidation)
+
+function customValidation(event) {
+
+    const field = event.target
+    const validation = ValidateField(field)
+
+    validation()
+
+}
+
+for( field of fields ){
+    field.addEventListener("invalid", event => { 
+        // eliminar o bubble
+        event.preventDefault()
+
+        customValidation(event)
+    })
+    field.addEventListener("blur", customValidation)
 }
 
 
+document.querySelector("form")
+.addEventListener("submit", event => {
+    console.log("enviar o formulário")
+
+    // não vai enviar o formulário
+    event.preventDefault()
+})
