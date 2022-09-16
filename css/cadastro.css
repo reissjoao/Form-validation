@@ -7,8 +7,9 @@
 
 body {
     background-image: url('./img/milad-fakurian-seA-FPPXL-M-unsplash.jpg');
-    background-size: cover;    
+    background-size: 100%; 
 }
+
 
 #cadastro {    
     background-color: rgba(5, 53, 143, 0.418);
