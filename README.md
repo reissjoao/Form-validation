@@ -2,7 +2,7 @@
 
 <br>
 
-![preview](./.github/Screenshot_1.png)
+![preview](./.github/Screenshot_1.png#vitrinedev)
 
 ## Descrição:
 
